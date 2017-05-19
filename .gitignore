@@ -1,0 +1,13 @@
+SharedLibrary/bin/
+SharedLibrary/obj/
+UserCRUD.v11.suo
+UserCRUD.suo
+UserCRUDRest/Web.Debug.config
+UserCRUDRest/Web.Release.config
+UserCRUDRest/bin/
+UserCRUDRest/obj/
+UserCRUDRest/SharedLibrary/obj/
+UserCRUDRestTest/bin/
+UserCRUDRestTest/obj/
+UserCRUDTransaction/bin/
+UserCRUDTransaction/obj/
