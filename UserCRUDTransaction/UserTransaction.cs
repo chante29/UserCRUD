@@ -9,32 +9,32 @@ namespace UserCRUDTransaction
 {
     public class UserTransaction : IUserTransaction
     {
-        public bool ValidateNewUser(User user)
+        public bool ValidateNewUser(IUser user)
+        {
+            return true;
+        }
+
+        public bool ValidateUpdateUser(IUser user)
         {
             throw new NotImplementedException();
         }
 
-        public bool ValidateUpdateUser(User user)
+        public bool AddNewUser(IUser user)
         {
             throw new NotImplementedException();
         }
 
-        public bool AddNewUser(User user)
+        public bool UpdateUser(IUser user)
         {
             throw new NotImplementedException();
         }
 
-        public bool UpdateUser(User user)
+        public List<IUser> GetAllUsers()
         {
             throw new NotImplementedException();
         }
 
-        public List<User> GetAllUsers()
-        {
-            throw new NotImplementedException();
-        }
-
-        public User GetUser(int id)
+        public IUser GetUser(int id)
         {
             throw new NotImplementedException();
         }

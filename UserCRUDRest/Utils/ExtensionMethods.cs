@@ -8,5 +8,15 @@ namespace UserCRUDRest.Utils
     public static class ExtensionMethods
     {
 
+        public static SharedLibrary.User ToCommonUser(this User user)
+        {
+            return new SharedLibrary.User
+                            {
+                                Id = user.Id,
+                                Name = user.Name,
+                                Birthday = user.Birthday
+                            };
+        }
+
     }
 }

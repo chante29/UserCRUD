@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -50,8 +53,22 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="UserCRUDTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj">
+      <Project>{99cccc7a-fe23-49a5-9f60-8699d61ce873}</Project>
+      <Name>SharedLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserCRUDRest\UserCRUDRest.csproj">
+      <Project>{fd2c12e5-f225-446a-a4bc-88dd58bbd03f}</Project>
+      <Name>UserCRUDRest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserCRUDTransaction\UserCRUDTransaction.csproj">
+      <Project>{0cca24cb-3863-44ec-bd3b-e7713f8a885e}</Project>
+      <Name>UserCRUDTransaction</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

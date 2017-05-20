@@ -14,6 +14,7 @@ namespace UserCRUDRest.Utils
     {
         #region Constants
 
+        private const string unityEmbeddedResourcePath = "UserCRUDRest.unity.config";
         private const string clonedUnityConfigFileName = "clonedUnityConf.config";
         #endregion
 
@@ -47,8 +48,6 @@ namespace UserCRUDRest.Utils
             FileIoManager fileManager = new FileIoManager();
             fileManager.CurrentAssembly = Assembly.GetExecutingAssembly();
 
-            //var unityEmbeddedResourcePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Unity.config");
-            string unityEmbeddedResourcePath = "UserCRUDRest.unity.config";
             string unityConfigContent = fileManager.ReadEmbeddedResource(unityEmbeddedResourcePath);
             fileManager.WriteTextFileToAssemblyDirectory(string.Empty, clonedUnityConfigFileName, unityConfigContent);
 
