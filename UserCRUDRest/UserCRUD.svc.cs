@@ -38,6 +38,7 @@ namespace UserCRUDRest
                 SharedLibrary.User commonUser = user.ToCommonUser();
 
                 userTransaction.ValidateNewUser(commonUser);
+                userTransaction.AddNewUser(commonUser);
 
                 return 0;
 
