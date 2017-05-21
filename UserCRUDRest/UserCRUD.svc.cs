@@ -24,6 +24,10 @@ namespace UserCRUDRest
             _logger = LogManager.GetLogger(typeof(UserCRUD));
         }
 
+        /// <summary>
+        /// Constructor only used in the tests
+        /// </summary>
+        /// <param name="userTransaction"></param>
         public UserCRUD(IUserTransaction userTransaction)
         {
             this.userTransaction = userTransaction;
@@ -40,7 +44,7 @@ namespace UserCRUDRest
                 if(userTransaction.ValidateNewUser(commonUser))
                     userTransaction.AddNewUser(commonUser);
 
-                return 0;
+                return  1;
 
             }
             catch (Exception e)

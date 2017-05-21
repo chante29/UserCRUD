@@ -8,16 +8,16 @@ namespace SharedLibrary
 {
     public interface IUserTransaction
     {
-        bool ValidateNewUser(IUser user);
+        bool ValidateNewUser(User user);
 
-        bool ValidateUpdateUser(IUser user);
+        bool ValidateUpdateUser(User user);
 
-        bool AddNewUser(IUser user);
+        int AddNewUser(User user);
 
-        bool UpdateUser(IUser user);
+        bool UpdateUser(User user);
 
-        List<IUser> GetAllUsers();
+        List<User> GetAllUsers();
 
-        IUser GetUser(int id);
+        User GetUser(int id);
     }
 }
