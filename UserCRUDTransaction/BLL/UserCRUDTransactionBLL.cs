@@ -1,15 +1,20 @@
 ﻿using log4net;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserCRUDTransaction.DAL;
 
 namespace UserCRUDTransaction.BLL
 {
     internal class UserCRUDTransactionBLL
     {
         private readonly ILog _logger;
+
+        private static string KeyConnection = "usercrudEntities";
 
         internal UserCRUDTransactionBLL()
         {
@@ -18,26 +23,29 @@ namespace UserCRUDTransaction.BLL
 
         internal int AddNewUser(SharedLibrary.User user)
         {
-            /*try
+            try
             {
-                _logger.InfoFormat("AddNewUser with user: {0}", user.);
+                _logger.InfoFormat("AddNewUser with user: {0}", user.Name);
 
-
-                ValidateNameFolderForCreation(userEmail, idParent, folderName);
-
-                //If user is secondary, we create folder by parent
-                int userId = GetUserIdByEmail(userEmail);
-
-                int libraryId = GetChannelLibraryIdByUserId(userId);
-                return PlaylistDal.CreateChannelFolder(userId, libraryId, folderName, folderDescription, idParent);
-
+                return UserCRUDDal.CreateUser(user.Name, 
+                                              user.Birthday.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture), 
+                                              GetConnectionStringValue(KeyConnection));
             }
             catch (Exception ex)
             {
-                _logger.Error("Error in CreateChannelFolder", ex);
+                _logger.Error("Error in AddNewUser", ex);
                 throw;
-            }*/
-            return 1;
+            }
+        }
+
+        public static string GetConnectionStringValue(string key)
+        {
+            ConnectionStringSettings cs = ConfigurationManager.ConnectionStrings[key];
+
+            if (cs == null)
+                throw new ConfigurationErrorsException("No Connection string in config file for " + key);
+
+            return cs.ConnectionString;
         }
     }
 }

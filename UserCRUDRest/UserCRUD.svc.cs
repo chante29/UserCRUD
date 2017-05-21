@@ -37,14 +37,15 @@ namespace UserCRUDRest
 
         public int CreateUser(User user)
         {
+            int userId = 0;
             try
             {
                 SharedLibrary.User commonUser = user.ToCommonUser();
 
                 if(userTransaction.ValidateNewUser(commonUser))
-                    userTransaction.AddNewUser(commonUser);
+                    userId = userTransaction.AddNewUser(commonUser);
 
-                return  1;
+                return  userId;
 
             }
             catch (Exception e)

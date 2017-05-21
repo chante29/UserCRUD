@@ -13,10 +13,10 @@ namespace UserCRUDTransaction.DAL
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Model1Container : DbContext
+    public partial class usercrudEntities : DbContext
     {
-        public Model1Container()
-            : base("name=Model1Container")
+        public usercrudEntities()
+            : base("name=usercrudEntities")
         {
         }
     

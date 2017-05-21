@@ -106,7 +106,9 @@ namespace UserCRUDRestTest
         [TestMethod]
         public void WhenCreateUser_GivenCorrectData_ShouldReturnIdDiferentZero()
         {
-            var userTest = GetUserTest();
+            const string name = "User Test";
+            const string date = "1985/02/28";
+            var userTest = GetUserTest(name, date);
 
             var requestApiCall = new ObjectGenericApiCall
                 {
@@ -116,22 +118,44 @@ namespace UserCRUDRestTest
             int UserId = _genericApiCaller.LaunchTest<UserCRUDRest.User, int>(requestApiCall, userTest);
             Assert.AreNotEqual(UserId, 0);
         }
+
+        [TestMethod]
+        public void WhenCreateTwoUsers_GivenCorrectData_ShouldReturnDifferentIds()
+        {
+            const string name = "User Test";
+            const string date = "1985/02/28";
+            var userTest = GetUserTest(name, date);
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Post,
+                ParamsResource = new List<string>()
+            };
+            int UserId = _genericApiCaller.LaunchTest<UserCRUDRest.User, int>(requestApiCall, userTest);
+
+            const string name2 = "User Test2";
+            const string date2 = "1985/10/11";
+            var user2Test = GetUserTest(name2, date2);
+            int User2Id = _genericApiCaller.LaunchTest<UserCRUDRest.User, int>(requestApiCall, user2Test);
+
+            Assert.AreNotEqual(UserId, User2Id);
+        }
+
         #endregion
 
         #region Private Methods
 
-        private UserCRUDRest.User GetUserTest()
+        private UserCRUDRest.User GetUserTest(string name, string date)
         {
-            DateTime date;
-            DateTime.TryParseExact("1985/02/28", "yyyy/MM/dd", null, DateTimeStyles.None, out date);
+            DateTime birthday;
+            DateTime.TryParseExact(date, "yyyy/MM/dd", null, DateTimeStyles.None, out birthday);
 
             return new UserCRUDRest.User
             {
-                Name = "User Test",
-                Birthday = date
+                Name = name,
+                Birthday = birthday
             };
         }
-
         #endregion
     }
 }
