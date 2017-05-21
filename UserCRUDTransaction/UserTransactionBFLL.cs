@@ -10,16 +10,25 @@ namespace UserCRUDTransaction
 {
     public class UserTransactionBFLL : IUserTransaction
     {
+        #region Properties
 
         private readonly UserCRUDTransactionBLL _userCRUDTransactionBLL;
 
+        #endregion
+        
+
+        #region Public Methods
+
         public UserTransactionBFLL()
         {
-            _userCRUDTransactionBLL = new UserCRUDTransactionBLL();            
+            _userCRUDTransactionBLL = new UserCRUDTransactionBLL();
         }
 
         public bool ValidateNewUser(User user)
         {
+            if (!ValidateId(CorrectIdNewUser, user.Id))
+                throw new ArgumentException("User Id in new user has to be zero");
+
             return true;
         }
 
@@ -47,5 +56,24 @@ namespace UserCRUDTransaction
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+        
+
+        #region Private Methods
+
+        private bool ValidateId(Func<int, bool> CorrectIdUser, int id)
+        {
+            return CorrectIdUser(id);
+        }
+
+        private bool CorrectIdNewUser(int id)
+        {
+            return id == 0;
+        }
+
+        #endregion
+
+        
     }
 }

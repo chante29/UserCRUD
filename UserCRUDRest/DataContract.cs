@@ -16,4 +16,15 @@ namespace UserCRUDRest
         [DataMember]
         public DateTime Birthday { get; set; }
     }
+
+    [DataContract]
+    public class Error
+    {
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public int ErrorCode { get; set; }
+        [DataMember]
+        public string ErrorMessage { get; set; }
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using SharedLibrary;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,25 @@ namespace UserCRUDTransaction.DAL
             {
                 var user = new user { Name = name, Birthday = birthday };
 
-                var userSave = context.user.Add(user);
+                
+                bool saveFailed;
+                do
+                {
+                    saveFailed = false;
 
-                context.SaveChanges();
+                    try
+                    {
+                        var userSave = context.user.Add(user);
+                        context.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+                        saveFailed = true;
+
+                        ex.Entries.Single().Reload();
+                    }
+
+                } while (saveFailed); 
                 return user.Id;
             }
         }

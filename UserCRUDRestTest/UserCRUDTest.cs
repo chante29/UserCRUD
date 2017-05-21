@@ -141,6 +141,24 @@ namespace UserCRUDRestTest
             Assert.AreNotEqual(UserId, User2Id);
         }
 
+        [TestMethod]
+        public void WhenCreateUser_GivenIdDifferentZero_ShouldReturnCodeErrorForbidden()
+        {
+            const int id = 1;
+            const string name = "User Test";
+            const string date = "1985/02/28";
+            var userTest = GetUserTest(name, date);
+
+            userTest.Id = id;
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Post,
+                ParamsResource = new List<string>()
+            };
+            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+        }
+
         #endregion
 
         #region Private Methods

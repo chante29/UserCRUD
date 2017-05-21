@@ -9,14 +9,22 @@ using System.Text;
 using UserCRUDRest.Utils;
 using Microsoft.Practices.Unity;
 using log4net;
+using System.Web;
+using System.Net;
 
 namespace UserCRUDRest
 {
     public class UserCRUD : IUserCRUD
     {
+        #region Properties
+
         private IUserTransaction userTransaction;
         private readonly ILog _logger;
+        
+        #endregion
 
+        #region Public Methods
+        
         public UserCRUD()
         {
             this.userTransaction = Container.Resolve <IUserTransaction>();
@@ -51,6 +59,7 @@ namespace UserCRUDRest
             catch (Exception e)
             {
                 _logger.DebugFormat(string.Format("Error creating user with message: {0} ", e.Message));
+                TreatException(e);
                 throw;
             }
         }
@@ -74,5 +83,28 @@ namespace UserCRUDRest
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region Private Methods
+
+        private static void TreatException(Exception ex)
+        {
+
+            if (HttpContext.Current != null)
+            {
+                HttpContext.Current.Response.SuppressFormsAuthenticationRedirect = true;
+            }
+
+            if (ex.GetType().Name.ToLower().Contains("webfaultexception"))
+                throw ex;
+
+            if (ex is ArgumentException)
+                throw new WebFaultException<Error>(new Error { ErrorMessage = ex.Message, ErrorCode = (int)HttpStatusCode.Forbidden }, HttpStatusCode.Forbidden);
+
+            throw new WebFaultException<Error>(new Error { ErrorMessage = ex.Message }, HttpStatusCode.InternalServerError);
+        }
+
+        #endregion
     }
 }
