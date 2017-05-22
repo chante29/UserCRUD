@@ -204,6 +204,23 @@ namespace UserCRUDRestTest
             _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
+        [TestMethod]
+        public void WhenCreateUser_GivenBirthdayAboveCurrentDate_ShouldReturnCodeErrorForbidden()
+        {
+            const string name = "User Tests";
+            const int numAddDays = 1;
+
+            string date = DateTime.Now.AddDays(numAddDays).ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
+            var userTest = GetUserTest(name, date);
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Post,
+                ParamsResource = new List<string>()
+            };
+            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+        }
+
         #endregion
 
         #region Private Methods

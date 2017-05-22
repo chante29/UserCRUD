@@ -66,18 +66,11 @@ namespace UserCRUDTransaction.BLL
                 throw new ArgumentException(string.Format("User name length must be less than or equal to {0}", MaxNameLength));
             if (!ValidateDate(user.Birthday))
                 throw new ArgumentException(string.Format("User birthday must be format yyyy-MM-dd"));
-
+            if (!ValidateExistingDateBirthday(user.Birthday))
+                throw new ArgumentException(string.Format("User birthday date has to be passed"));
             return true;
         }
 
-        private bool ValidateDate(string birthday)
-        {
-            DateTime birthdayDate;
-
-            return (DateTime.TryParseExact(birthday, "yyyy/MM/dd", null, DateTimeStyles.None, out birthdayDate));
-
-                
-        }
 
         #endregion
 
@@ -93,6 +86,26 @@ namespace UserCRUDTransaction.BLL
         private bool CorrectIdNewUser(int id)
         {
             return id == 0;
+        }
+
+
+        private bool ValidateExistingDateBirthday(string birthday)
+        {
+            DateTime birthdayDate;
+
+            DateTime.TryParseExact(birthday, "yyyy/MM/dd", null, DateTimeStyles.None, out birthdayDate);
+
+            return DateTime.Now > birthdayDate;
+
+        }
+
+        private bool ValidateDate(string birthday)
+        {
+            DateTime birthdayDate;
+
+            return (DateTime.TryParseExact(birthday, "yyyy/MM/dd", null, DateTimeStyles.None, out birthdayDate));
+
+
         }
 
         #endregion
