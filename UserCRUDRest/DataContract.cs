@@ -14,14 +14,12 @@ namespace UserCRUDRest
         [DataMember]
         public string Name { get; set; }
         [DataMember]
-        public DateTime Birthday { get; set; }
+        public string Birthday { get; set; }
     }
 
     [DataContract]
     public class Error
     {
-        [DataMember]
-        public int Id { get; set; }
         [DataMember]
         public int ErrorCode { get; set; }
         [DataMember]

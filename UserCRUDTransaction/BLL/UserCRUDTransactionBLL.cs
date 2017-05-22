@@ -36,7 +36,7 @@ namespace UserCRUDTransaction.BLL
                 _logger.InfoFormat("AddNewUser with user: {0}", user.Name);
 
                 return UserCRUDDal.CreateUser(user.Name,
-                                              user.Birthday.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture),
+                                              user.Birthday,
                                               GetConnectionStringValue(KeyConnection));
             }
             catch (Exception ex)
@@ -64,8 +64,19 @@ namespace UserCRUDTransaction.BLL
                 throw new ArgumentException("User name must contain value");
             if(user.Name.Length > MaxNameLength)
                 throw new ArgumentException(string.Format("User name length must be less than or equal to {0}", MaxNameLength));
+            if (!ValidateDate(user.Birthday))
+                throw new ArgumentException(string.Format("User birthday must be format yyyy-MM-dd"));
 
             return true;
+        }
+
+        private bool ValidateDate(string birthday)
+        {
+            DateTime birthdayDate;
+
+            return (DateTime.TryParseExact(birthday, "yyyy/MM/dd", null, DateTimeStyles.None, out birthdayDate));
+
+                
         }
 
         #endregion

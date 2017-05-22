@@ -189,19 +189,31 @@ namespace UserCRUDRestTest
             _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
+        [TestMethod]
+        public void WhenCreateUser_GivenIncorrectFormatBirthday_ShouldReturnCodeErrorForbidden()
+        {
+            const string name = "User Tests";
+            const string date = "1985-28-02";
+            var userTest = GetUserTest(name, date);
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Post,
+                ParamsResource = new List<string>()
+            };
+            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+        }
+
         #endregion
 
         #region Private Methods
 
         private UserCRUDRest.User GetUserTest(string name, string date)
         {
-            DateTime birthday;
-            DateTime.TryParseExact(date, "yyyy/MM/dd", null, DateTimeStyles.None, out birthday);
-
             return new UserCRUDRest.User
             {
                 Name = name,
-                Birthday = birthday
+                Birthday = date
             };
         }
         #endregion
