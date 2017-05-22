@@ -319,6 +319,105 @@ namespace UserCRUDRestTest
             Assert.AreNotEqual(userStored.Birthday, userTest.Birthday);
 
         }
+        
+        [TestMethod]
+        public void WhenUpdateUser_GivenIdDoentExist_ShouldReturnCodeErrorForbidden()
+        {
+            const int id = 0;
+            const string name = "User Test";
+            const string date = "1985/02/28";
+            var userTest = GetUserTest(name, date);
+
+            userTest.Id = id;
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Put,
+                ParamsResource = new List<string>()
+            };
+            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+        }
+
+        [TestMethod]
+        public void WhenUpdateUser_GivenNameEmpty_ShouldReturnCodeErrorForbidden()
+        {
+            const string name = "User Test";
+            const string date = "1985/02/28";
+            var userTest = GetUserTest(name, date);
+
+            userTest.Id = CreateUser(userTest);
+
+            userTest.Name = "";
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Put,
+                ParamsResource = new List<string>()
+            };
+            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+        }
+
+        [TestMethod]
+        public void WhenUpdateUser_GivenNameWith129Characters_ShouldReturnCodeErrorForbidden()
+        {
+            const string name = "User Test";
+            const string date = "1985/02/28";
+            var userTest = GetUserTest(name, date);
+
+            userTest.Id = CreateUser(userTest);
+
+            userTest.Name = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Put,
+                ParamsResource = new List<string>()
+            };
+            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+        }
+
+        [TestMethod]
+        public void WhenUpdateUser_GivenIncorrectFormatBirthday_ShouldReturnCodeErrorForbidden()
+        {
+            const string name = "User Test";
+            const string date = "1985/02/28";
+            var userTest = GetUserTest(name, date);
+
+            userTest.Id = CreateUser(userTest);
+
+            userTest.Birthday = "1985-28-02";
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Put,
+                ParamsResource = new List<string>()
+            };
+            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+        }
+
+        [TestMethod]
+        public void WhenUpdateUser_GivenBirthdayAboveCurrentDate_ShouldReturnCodeErrorForbidden()
+        {
+
+            const string name = "User Test";
+            const string date = "1985/02/28";
+
+            const int numAddDays = 1;
+
+            var userTest = GetUserTest(name, date);
+
+            userTest.Id = CreateUser(userTest);
+
+            userTest.Birthday = DateTime.Now.AddDays(numAddDays).ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Put,
+                ParamsResource = new List<string>()
+            };
+            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+
+        }
 
         #endregion
 

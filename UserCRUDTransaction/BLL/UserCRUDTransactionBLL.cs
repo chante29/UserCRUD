@@ -64,8 +64,12 @@ namespace UserCRUDTransaction.BLL
 
         internal bool ValidateUpdateUser(SharedLibrary.User user)
         {
-            return true;
+            if (!ValidateId(CorrectIdUpdateUser, user.Id) 
+                || !UserCRUDDal.ExistsUser( user.Id, GetConnectionStringValue(KeyConnection)))
+                throw new ArgumentException("No exists any user with this id");
+            return validateSimilarFieldsInUser(user);
         }
+
 
         internal SharedLibrary.User GetUser(int id)
         {
@@ -88,15 +92,7 @@ namespace UserCRUDTransaction.BLL
         {
             if (!ValidateId(CorrectIdNewUser, user.Id))
                 throw new ArgumentException("User Id in new user has to be zero");
-            if (string.IsNullOrEmpty(user.Name))
-                throw new ArgumentException("User name must contain value");
-            if (user.Name.Length > MaxNameLength)
-                throw new ArgumentException(string.Format("User name length must be less than or equal to {0}", MaxNameLength));
-            if (!ValidateDate(user.Birthday))
-                throw new ArgumentException(string.Format("User birthday must be format yyyy-MM-dd"));
-            if (!ValidateExistingDateBirthday(user.Birthday))
-                throw new ArgumentException(string.Format("User birthday date has to be passed"));
-            return true;
+            return validateSimilarFieldsInUser(user);
         }
 
         #endregion
@@ -144,6 +140,25 @@ namespace UserCRUDTransaction.BLL
             return (DateTime.TryParseExact(birthday, "yyyy/MM/dd", null, DateTimeStyles.None, out birthdayDate));
 
 
+        }
+
+
+        private bool CorrectIdUpdateUser(int id)
+        {
+            return id != 0;
+        }
+
+        private bool validateSimilarFieldsInUser(SharedLibrary.User user)
+        {
+            if (string.IsNullOrEmpty(user.Name))
+                throw new ArgumentException("User name must contain value");
+            if (user.Name.Length > MaxNameLength)
+                throw new ArgumentException(string.Format("User name length must be less than or equal to {0}", MaxNameLength));
+            if (!ValidateDate(user.Birthday))
+                throw new ArgumentException(string.Format("User birthday must be format yyyy-MM-dd"));
+            if (!ValidateExistingDateBirthday(user.Birthday))
+                throw new ArgumentException(string.Format("User birthday date has to be passed"));
+            return true;
         }
 
         #endregion
