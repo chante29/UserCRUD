@@ -449,6 +449,26 @@ namespace UserCRUDRestTest
             Assert.AreEqual(user.Birthday, userTest.Birthday);
         }
 
+        [TestMethod]
+        public void WhenGetUserById_GivenIdDoentExists_ShouldReturnNull()
+        {
+            const string queryParamId = "id";
+            const int id = 0;
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Get,
+                ParamsResource = new List<string>(),
+                QueryStringParams = new Dictionary<string, object>()
+            };
+
+            requestApiCall.QueryStringParams.Add(queryParamId, id);
+
+            var user = _genericApiCaller.LaunchTest<UserCRUDRest.User>(requestApiCall);
+
+            Assert.IsNull(user);
+        }
+
         #endregion
 
 

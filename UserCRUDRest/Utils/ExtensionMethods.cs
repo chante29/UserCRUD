@@ -20,12 +20,12 @@ namespace UserCRUDRest.Utils
 
         public static User ToDataContract(this SharedLibrary.User user)
         {
-            return new User
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Birthday = user.Birthday
-            };
+            return user == null ? null : new User
+                                            {
+                                                Id = user.Id,
+                                                Name = user.Name,
+                                                Birthday = user.Birthday
+                                            };
         }
 
     }

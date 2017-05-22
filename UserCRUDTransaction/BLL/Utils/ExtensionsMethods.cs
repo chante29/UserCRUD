@@ -22,12 +22,12 @@ namespace UserCRUDTransaction.BLL.Utils
 
         public static SharedLibrary.User ToSharedLibrary(this UserCRUDTransaction.DAL.user user)
         {
-            return new User
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Birthday = user.Birthday
-            };
+            return user == null ? null : new User
+                                                {
+                                                    Id = user.Id,
+                                                    Name = user.Name,
+                                                    Birthday = user.Birthday
+                                                };
         }
     }
 }
