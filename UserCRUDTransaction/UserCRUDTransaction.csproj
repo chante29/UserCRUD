@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\UserCRUDTransactionBLL.cs" />
+    <Compile Include="BLL\Utils\ExtensionsMethods.cs" />
     <Compile Include="DAL\CustomUserContext.cs" />
     <Compile Include="DAL\user.cs">
       <DependentUpon>UserModel.tt</DependentUpon>

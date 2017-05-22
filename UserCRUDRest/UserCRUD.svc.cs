@@ -76,10 +76,19 @@ namespace UserCRUDRest
 
         public void UpdateUser(User user)
         {
-            SharedLibrary.User commonUser = user.ToCommonUser();
+            try
+            {
+                SharedLibrary.User commonUser = user.ToCommonUser();
 
-            if(userTransaction.ValidateUpdateUser(commonUser))
-                 userTransaction.UpdateUser(commonUser);
+                if(userTransaction.ValidateUpdateUser(commonUser))
+                     userTransaction.UpdateUser(commonUser);
+            }
+            catch (Exception e)
+            {
+                _logger.DebugFormat(string.Format("Error updating user with message: {0} ", e.Message));
+                TreatException(e);
+                throw;
+            }
         }
 
         public void DeleteUser(string id)

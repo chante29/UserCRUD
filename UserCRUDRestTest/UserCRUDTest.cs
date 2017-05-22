@@ -223,18 +223,6 @@ namespace UserCRUDRestTest
 
         #endregion
 
-        #region Private Methods
-
-        private UserCRUDRest.User GetUserTest(string name, string date)
-        {
-            return new UserCRUDRest.User
-            {
-                Name = name,
-                Birthday = date
-            };
-        }
-        #endregion
-
         #region UpdateUserTests
         [TestMethod]
         public void WhenUpdateUser_ThenMethodValidateUpdateUserHasToBeCalled()
@@ -282,6 +270,47 @@ namespace UserCRUDRestTest
             userTransactionProvider.AssertWasNotCalled(userTransaction => userTransaction.UpdateUser(Arg<SharedLibrary.User>.Is.Anything));
 
         }
+
+        [TestMethod]
+        public void WhenUpdateUser_GivenCorrectData_ShouldReturnCode200()
+        {
+            const string name = "User Test";
+            const string date = "1985/02/28";
+            var userTest = GetUserTest(name, date);
+            userTest.Id = CreateUser(userTest);
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Put,
+                ParamsResource = new List<string>()
+            };
+            _genericApiCaller.LaunchTest<UserCRUDRest.User>(requestApiCall, userTest);
+        }
+
+
+        #endregion
+
+        #region Private Methods
+
+        private UserCRUDRest.User GetUserTest(string name, string date)
+        {
+            return new UserCRUDRest.User
+            {
+                Name = name,
+                Birthday = date
+            };
+        }
+
+        private int CreateUser(UserCRUDRest.User user)
+        {
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Post,
+                ParamsResource = new List<string>()
+            };
+            return _genericApiCaller.LaunchTest<UserCRUDRest.User, int>(requestApiCall, user);
+        }
+
         #endregion
 
     }

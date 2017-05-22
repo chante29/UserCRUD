@@ -32,7 +32,7 @@ namespace UserCRUDTransaction
 
         public bool ValidateUpdateUser(User user)
         {
-            throw new NotImplementedException();
+            return _userCRUDTransactionBLL.ValidateUpdateUser(user);
         }
 
         public int AddNewUser(User user)
@@ -42,7 +42,7 @@ namespace UserCRUDTransaction
 
         public bool UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            return _userCRUDTransactionBLL.UpdateUser(user);
         }
 
         public List<User> GetAllUsers()

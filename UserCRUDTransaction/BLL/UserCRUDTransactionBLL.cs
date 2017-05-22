@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserCRUDTransaction.DAL;
+using UserCRUDTransaction.BLL.Utils;
 
 namespace UserCRUDTransaction.BLL
 {
@@ -35,13 +36,28 @@ namespace UserCRUDTransaction.BLL
             {
                 _logger.InfoFormat("AddNewUser with user: {0}", user.Name);
 
-                return UserCRUDDal.CreateUser(user.Name,
-                                              user.Birthday,
+                return UserCRUDDal.CreateUser(user.ToDAL(),
                                               GetConnectionStringValue(KeyConnection));
             }
             catch (Exception ex)
             {
                 _logger.Error("Error in AddNewUser", ex);
+                throw;
+            }
+        }
+
+        internal bool UpdateUser(SharedLibrary.User user)
+        {
+            try
+            {
+                _logger.InfoFormat("UpdateUser with user: {0}", user.Name);
+
+                return UserCRUDDal.UpdateUser(user.ToDAL(),
+                                              GetConnectionStringValue(KeyConnection));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error in UpdateUser", ex);
                 throw;
             }
         }
@@ -71,6 +87,10 @@ namespace UserCRUDTransaction.BLL
             return true;
         }
 
+        internal bool ValidateUpdateUser(SharedLibrary.User user)
+        {
+            return true;
+        }
 
         #endregion
 
