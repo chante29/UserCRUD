@@ -28,6 +28,8 @@ namespace UserCRUDTransaction
         {
             if (!ValidateId(CorrectIdNewUser, user.Id))
                 throw new ArgumentException("User Id in new user has to be zero");
+            if (string.IsNullOrEmpty(user.Name))
+                throw new ArgumentException("User name must contain value");
 
             return true;
         }
