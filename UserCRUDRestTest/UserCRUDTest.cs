@@ -279,12 +279,45 @@ namespace UserCRUDRestTest
             var userTest = GetUserTest(name, date);
             userTest.Id = CreateUser(userTest);
 
+            userTest.Name = "User Test Modify";
+            userTest.Birthday = "2000/10/25";
+
             var requestApiCall = new ObjectGenericApiCall
             {
                 MethodRequest = HttpMethod.Put,
                 ParamsResource = new List<string>()
             };
             _genericApiCaller.LaunchTest<UserCRUDRest.User>(requestApiCall, userTest);
+        }
+
+        [TestMethod]
+        public void WhenUpdateUser_GivenCorrectData_ShouldChangeValues()
+        {
+            const string name = "User Test";
+            const string date = "1985/02/28";
+            var userTest = GetUserTest(name, date);
+            userTest.Id = CreateUser(userTest);
+
+            var userUpdate = new UserCRUDRest.User
+                                 {
+                                     Id = userTest.Id,
+                                     Name = "User Test Modify",
+                                     Birthday = "2000/10/25"
+                                 };
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Put,
+                ParamsResource = new List<string>()
+            };
+            _genericApiCaller.LaunchTest<UserCRUDRest.User>(requestApiCall, userUpdate);
+
+            var userStored = GetUser(userTest.Id);
+
+            Assert.AreEqual(userStored.Id, userTest.Id);
+            Assert.AreNotEqual(userStored.Name, userTest.Name);
+            Assert.AreNotEqual(userStored.Birthday, userTest.Birthday);
+
         }
 
         #endregion
@@ -339,6 +372,22 @@ namespace UserCRUDRestTest
                 ParamsResource = new List<string>()
             };
             return _genericApiCaller.LaunchTest<UserCRUDRest.User, int>(requestApiCall, user);
+        }
+
+        private UserCRUDRest.User GetUser(int id)
+        {
+            const string queryParamId = "id";
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Get,
+                ParamsResource = new List<string>(),
+                QueryStringParams = new Dictionary<string, object>()
+            };
+
+            requestApiCall.QueryStringParams.Add(queryParamId, id);
+
+            return _genericApiCaller.LaunchTest<UserCRUDRest.User>(requestApiCall);
         }
 
         #endregion
