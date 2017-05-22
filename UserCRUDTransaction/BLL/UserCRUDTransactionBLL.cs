@@ -88,6 +88,24 @@ namespace UserCRUDTransaction.BLL
             }
         }
 
+        internal List<SharedLibrary.User> GetAllUsers()
+        {
+            try
+            {
+                _logger.InfoFormat("Calling GetAllUsers");
+
+                var users = UserCRUDDal.GetAllUsers(GetConnectionStringValue(KeyConnection));
+
+                return users.Select(user => user.ToSharedLibrary())
+                                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error in GetAllUsers", ex);
+                throw;
+            }
+        }
+
         internal bool ValidateNewUser(SharedLibrary.User user)
         {
             if (!ValidateId(CorrectIdNewUser, user.Id))

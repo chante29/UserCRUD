@@ -9,6 +9,7 @@ using System.Threading;
 using System.Net.Http;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace UserCRUDRestTest
 {
@@ -467,6 +468,51 @@ namespace UserCRUDRestTest
             var user = _genericApiCaller.LaunchTest<UserCRUDRest.User>(requestApiCall);
 
             Assert.IsNull(user);
+        }
+
+        #endregion
+
+        #region GetUsersTests
+
+        [TestMethod]
+        public void WhenGetUsers_GivenAnyData_ShouldReturnCorrectUsers()
+        {
+            const string name = "User Test";
+            const string date = "1985/02/28";
+            var userTest = GetUserTest(name, date);
+            userTest.Id = CreateUser(userTest);
+
+            string name2 = "User Test2";
+            string date2 = "2000/01/28";
+            var userTest2 = GetUserTest(name2, date2);
+            userTest2.Id = CreateUser(userTest2);
+
+            string name3 = "User Test3";
+            string date3 = "2005/01/28";
+            var userTest3 = GetUserTest(name3, date3);
+            userTest3.Id = CreateUser(userTest3);
+
+            var requestApiCall = new ObjectGenericApiCall
+                {
+                    MethodRequest = HttpMethod.Get,
+                    ParamsResource = new List<string>(),
+                };
+
+            var users = _genericApiCaller.LaunchTest<List<UserCRUDRest.User>>(requestApiCall);
+
+            Assert.IsTrue(users.Count >= 3);
+
+            var user1 = users.FirstOrDefault(user => user.Id == userTest.Id);
+            Assert.AreEqual(user1.Name, userTest.Name);
+            Assert.AreEqual(user1.Birthday, userTest.Birthday);
+
+            var user2 = users.FirstOrDefault(user => user.Id == userTest2.Id);
+            Assert.AreEqual(user2.Name, userTest2.Name);
+            Assert.AreEqual(user2.Birthday, userTest2.Birthday);
+
+            var user3 = users.FirstOrDefault(user => user.Id == userTest3.Id);
+            Assert.AreEqual(user3.Name, userTest3.Name);
+            Assert.AreEqual(user3.Birthday, userTest3.Birthday);
         }
 
         #endregion

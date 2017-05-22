@@ -83,5 +83,13 @@ namespace UserCRUDTransaction.DAL
                 return context.user.Any(usr => usr.Id == id);
             }
         }
+
+        internal static List<user> GetAllUsers(string connectionString)
+        {
+            using (var context = new usercrudEntities(connectionString))
+            {
+                return context.user.ToList();
+            }
+        }
     }
 }

@@ -66,7 +66,19 @@ namespace UserCRUDRest
 
         public List<User> GetAllUsers()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return userTransaction.GetAllUsers()
+                                    .Select(user => user.ToDataContract())
+                                    .ToList();
+
+            }
+            catch (Exception e)
+            {
+                _logger.DebugFormat(string.Format("Error GetAllUsers user with message: {0} ", e.Message));
+                TreatException(e);
+                throw;
+            }
         }
 
         public User GetUser(int id)

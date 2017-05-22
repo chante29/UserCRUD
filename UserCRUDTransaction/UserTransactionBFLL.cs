@@ -47,7 +47,7 @@ namespace UserCRUDTransaction
 
         public List<User> GetAllUsers()
         {
-            throw new NotImplementedException();
+            return _userCRUDTransactionBLL.GetAllUsers();
         }
 
         public User GetUser(int id)
