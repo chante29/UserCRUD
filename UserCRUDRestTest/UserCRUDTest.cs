@@ -234,5 +234,24 @@ namespace UserCRUDRestTest
             };
         }
         #endregion
+
+        #region CreateUserTests
+        [TestMethod]
+        public void WhenUpdateUser_ThenMethodValidateUpdateUserHasToBeCalled()
+        {
+            var userTransactionProvider = MockRepository.GenerateStub<IUserTransaction>();
+            var user = MockRepository.GenerateStub<UserCRUDRest.User>();
+
+            userTransactionProvider.Stub(userTransaction => userTransaction.ValidateUpdateUser(Arg<SharedLibrary.User>.Is.Anything)).Return(true);
+
+            var userCRUD = new UserCRUD(userTransactionProvider);
+            userCRUD.UpdateUser(user);
+
+            userTransactionProvider.AssertWasCalled(userTransaction => userTransaction.ValidateUpdateUser(Arg<SharedLibrary.User>.Is.Anything));
+
+        }
+
+        #endregion
+
     }
 }

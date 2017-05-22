@@ -74,9 +74,11 @@ namespace UserCRUDRest
             throw new NotImplementedException();
         }
 
-        public void UpdateUser(User User)
+        public void UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            SharedLibrary.User commonUser = user.ToCommonUser();
+
+            userTransaction.ValidateUpdateUser(commonUser);
         }
 
         public void DeleteUser(string id)
