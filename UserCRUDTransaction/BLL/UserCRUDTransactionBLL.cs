@@ -62,7 +62,50 @@ namespace UserCRUDTransaction.BLL
             }
         }
 
-        internal static string GetConnectionStringValue(string key)
+        internal bool ValidateUpdateUser(SharedLibrary.User user)
+        {
+            return true;
+        }
+
+        internal SharedLibrary.User GetUser(int id)
+        {
+            try
+            {
+                _logger.InfoFormat("GetUser with userId: {0}", id);
+
+                var user = UserCRUDDal.GetUser(id, GetConnectionStringValue(KeyConnection));
+
+                return user.ToSharedLibrary();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error in GetUser", ex);
+                throw;
+            }
+        }
+
+        internal bool ValidateNewUser(SharedLibrary.User user)
+        {
+            if (!ValidateId(CorrectIdNewUser, user.Id))
+                throw new ArgumentException("User Id in new user has to be zero");
+            if (string.IsNullOrEmpty(user.Name))
+                throw new ArgumentException("User name must contain value");
+            if (user.Name.Length > MaxNameLength)
+                throw new ArgumentException(string.Format("User name length must be less than or equal to {0}", MaxNameLength));
+            if (!ValidateDate(user.Birthday))
+                throw new ArgumentException(string.Format("User birthday must be format yyyy-MM-dd"));
+            if (!ValidateExistingDateBirthday(user.Birthday))
+                throw new ArgumentException(string.Format("User birthday date has to be passed"));
+            return true;
+        }
+
+        #endregion
+
+        
+
+        #region Private Methods
+
+        private static string GetConnectionStringValue(string key)
         {
             ConnectionStringSettings cs = ConfigurationManager.ConnectionStrings[key];
 
@@ -72,31 +115,6 @@ namespace UserCRUDTransaction.BLL
             return cs.ConnectionString;
         }
 
-        internal bool ValidateNewUser(SharedLibrary.User user)
-        {
-            if (!ValidateId(CorrectIdNewUser, user.Id))
-                throw new ArgumentException("User Id in new user has to be zero");
-            if (string.IsNullOrEmpty(user.Name))
-                throw new ArgumentException("User name must contain value");
-            if(user.Name.Length > MaxNameLength)
-                throw new ArgumentException(string.Format("User name length must be less than or equal to {0}", MaxNameLength));
-            if (!ValidateDate(user.Birthday))
-                throw new ArgumentException(string.Format("User birthday must be format yyyy-MM-dd"));
-            if (!ValidateExistingDateBirthday(user.Birthday))
-                throw new ArgumentException(string.Format("User birthday date has to be passed"));
-            return true;
-        }
-
-        internal bool ValidateUpdateUser(SharedLibrary.User user)
-        {
-            return true;
-        }
-
-        #endregion
-
-        
-
-        #region Private Methods
 
         private bool ValidateId(Func<int, bool> CorrectIdUser, int id)
         {
@@ -129,5 +147,6 @@ namespace UserCRUDTransaction.BLL
         }
 
         #endregion
+
     }
 }

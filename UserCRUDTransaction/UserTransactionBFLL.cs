@@ -52,7 +52,7 @@ namespace UserCRUDTransaction
 
         public User GetUser(int id)
         {
-            throw new NotImplementedException();
+            return _userCRUDTransactionBLL.GetUser(id);
         }
 
         #endregion

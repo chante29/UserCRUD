@@ -287,8 +287,38 @@ namespace UserCRUDRestTest
             _genericApiCaller.LaunchTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
+        #endregion
+
+        #region GetUserByIdTests
+
+        [TestMethod]
+        public void WhenGetUserById_GivenCorrectId_ShouldReturnCorrectUser()
+        {
+            const string queryParamId = "id";
+
+            const string name = "User Test";
+            const string date = "1985/02/28";
+            var userTest = GetUserTest(name, date);
+            userTest.Id = CreateUser(userTest);
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Get,
+                ParamsResource = new List<string>(),
+                QueryStringParams = new Dictionary<string,object>()
+            };
+
+            requestApiCall.QueryStringParams.Add(queryParamId, userTest.Id);
+
+            var user = _genericApiCaller.LaunchTest<UserCRUDRest.User>(requestApiCall);
+
+            Assert.AreEqual(user.Id, userTest.Id);
+            Assert.AreEqual(user.Name, userTest.Name);
+            Assert.AreEqual(user.Birthday, userTest.Birthday);
+        }
 
         #endregion
+
 
         #region Private Methods
 

@@ -67,5 +67,13 @@ namespace UserCRUDTransaction.DAL
                 return true;
             }
         }
+
+        internal static user GetUser(int id, string connectionString)
+        {
+            using (var context = new usercrudEntities(connectionString))
+            {
+               return context.user.FirstOrDefault(usr => usr.Id == id);
+            }
+        }
     }
 }

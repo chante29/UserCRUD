@@ -71,7 +71,17 @@ namespace UserCRUDRest
 
         public User GetUser(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+               return userTransaction.GetUser(id).ToDataContract();
+
+            }
+            catch (Exception e)
+            {
+                _logger.DebugFormat(string.Format("Error creating user with message: {0} ", e.Message));
+                TreatException(e);
+                throw;
+            }
         }
 
         public void UpdateUser(User user)
