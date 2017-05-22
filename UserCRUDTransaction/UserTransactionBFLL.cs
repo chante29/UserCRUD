@@ -26,12 +26,8 @@ namespace UserCRUDTransaction
 
         public bool ValidateNewUser(User user)
         {
-            if (!ValidateId(CorrectIdNewUser, user.Id))
-                throw new ArgumentException("User Id in new user has to be zero");
-            if (string.IsNullOrEmpty(user.Name))
-                throw new ArgumentException("User name must contain value");
-
-            return true;
+            return _userCRUDTransactionBLL.ValidateNewUser(user);
+           
         }
 
         public bool ValidateUpdateUser(User user)
@@ -60,22 +56,6 @@ namespace UserCRUDTransaction
         }
 
         #endregion
-        
-
-        #region Private Methods
-
-        private bool ValidateId(Func<int, bool> CorrectIdUser, int id)
-        {
-            return CorrectIdUser(id);
-        }
-
-        private bool CorrectIdNewUser(int id)
-        {
-            return id == 0;
-        }
-
-        #endregion
-
         
     }
 }

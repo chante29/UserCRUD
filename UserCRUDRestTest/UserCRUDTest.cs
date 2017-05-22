@@ -174,6 +174,21 @@ namespace UserCRUDRestTest
             _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
+        [TestMethod]
+        public void WhenCreateUser_GivenNameWith129Characters_ShouldReturnCodeErrorForbidden()
+        {
+            const string name = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            const string date = "1985/02/28";
+            var userTest = GetUserTest(name, date);
+
+            var requestApiCall = new ObjectGenericApiCall
+            {
+                MethodRequest = HttpMethod.Post,
+                ParamsResource = new List<string>()
+            };
+            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+        }
+
         #endregion
 
         #region Private Methods
