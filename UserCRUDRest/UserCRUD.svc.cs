@@ -79,6 +79,8 @@ namespace UserCRUDRest
             SharedLibrary.User commonUser = user.ToCommonUser();
 
             userTransaction.ValidateUpdateUser(commonUser);
+
+            userTransaction.UpdateUser(commonUser);
         }
 
         public void DeleteUser(string id)
