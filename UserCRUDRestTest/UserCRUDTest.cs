@@ -267,6 +267,21 @@ namespace UserCRUDRestTest
 
         }
 
+        [TestMethod]
+        public void WhenUpdateUser_ThenMethodValidateUpdateUserIsFalse_ThenUpdateUserNoHasToBeCalled()
+        {
+            var userTransactionProvider = MockRepository.GenerateStub<IUserTransaction>();
+            var user = MockRepository.GenerateStub<UserCRUDRest.User>();
+
+            userTransactionProvider.Stub(userTransaction => userTransaction.ValidateUpdateUser(Arg<SharedLibrary.User>.Is.Anything)).Return(false);
+            userTransactionProvider.Stub(userTransaction => userTransaction.UpdateUser(Arg<SharedLibrary.User>.Is.Anything)).Return(true);
+
+            var userCRUD = new UserCRUD(userTransactionProvider);
+            userCRUD.UpdateUser(user);
+
+            userTransactionProvider.AssertWasNotCalled(userTransaction => userTransaction.UpdateUser(Arg<SharedLibrary.User>.Is.Anything));
+
+        }
         #endregion
 
     }
