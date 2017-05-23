@@ -116,7 +116,7 @@ namespace UserCRUDRestTest
                     MethodRequest = HttpMethod.Post,
                     ParamsResource = new List<string>()
                 };
-            int UserId = _genericApiCaller.LaunchTest<UserCRUDRest.User, int>(requestApiCall, userTest);
+            int UserId = _genericApiCaller.LaunchOkCreateTest<UserCRUDRest.User, int>(requestApiCall, userTest);
             Assert.AreNotEqual(UserId, 0);
         }
 
@@ -132,12 +132,12 @@ namespace UserCRUDRestTest
                 MethodRequest = HttpMethod.Post,
                 ParamsResource = new List<string>()
             };
-            int UserId = _genericApiCaller.LaunchTest<UserCRUDRest.User, int>(requestApiCall, userTest);
+            int UserId = _genericApiCaller.LaunchOkCreateTest<UserCRUDRest.User, int>(requestApiCall, userTest);
 
             const string name2 = "User Test2";
             const string date2 = "1985/10/11";
             var user2Test = GetUserTest(name2, date2);
-            int User2Id = _genericApiCaller.LaunchTest<UserCRUDRest.User, int>(requestApiCall, user2Test);
+            int User2Id = _genericApiCaller.LaunchOkCreateTest<UserCRUDRest.User, int>(requestApiCall, user2Test);
 
             Assert.AreNotEqual(UserId, User2Id);
         }
@@ -638,7 +638,7 @@ namespace UserCRUDRestTest
                 MethodRequest = HttpMethod.Post,
                 ParamsResource = new List<string>()
             };
-            return _genericApiCaller.LaunchTest<UserCRUDRest.User, int>(requestApiCall, user);
+            return _genericApiCaller.LaunchOkCreateTest<UserCRUDRest.User, int>(requestApiCall, user);
         }
 
         private UserCRUDRest.User GetUser(int id)
