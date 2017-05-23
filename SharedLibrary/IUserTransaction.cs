@@ -19,5 +19,7 @@ namespace SharedLibrary
         List<User> GetAllUsers();
 
         User GetUser(int id);
+
+        bool DeleteUser(string id);
     }
 }

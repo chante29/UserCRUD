@@ -120,7 +120,16 @@ namespace UserCRUDRest
 
         public void DeleteUser(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                userTransaction.DeleteUser(id);
+            }
+            catch (Exception e)
+            {
+                _logger.DebugFormat(string.Format("Error DeleteUser with message: {0} ", e.Message));
+                TreatException(e);
+                throw;
+            }
         }
 
         #endregion

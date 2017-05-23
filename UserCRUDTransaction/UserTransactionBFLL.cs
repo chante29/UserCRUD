@@ -55,6 +55,11 @@ namespace UserCRUDTransaction
             return _userCRUDTransactionBLL.GetUser(id);
         }
 
+        public bool DeleteUser(string id)
+        {
+            return _userCRUDTransactionBLL.DeleteUser(id);
+        }
+
         #endregion
         
     }

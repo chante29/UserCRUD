@@ -107,6 +107,27 @@ namespace UserCRUDRestTest.Utils
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        public void LaunchTest(ObjectGenericApiCall request)
+        {
+            var client = new HttpClient();
+
+            HttpRequestMessage requestMessage = GetRequestMessage(request);
+
+
+            using (HttpResponseMessage response = client.SendAsync(requestMessage).Result)
+            {
+                Assert.IsNotNull(response.Content);
+                Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Launch a generic HttpRequestMessage
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public T LaunchNoContentTest<T>(ObjectGenericApiCall request)
         {
             var client = new HttpClient();

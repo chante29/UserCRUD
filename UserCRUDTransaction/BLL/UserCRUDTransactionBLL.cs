@@ -113,6 +113,28 @@ namespace UserCRUDTransaction.BLL
             return validateSimilarFieldsInUser(user);
         }
 
+        internal bool DeleteUser(string id)
+        {
+            try
+            {
+                _logger.InfoFormat("DeleteUser with userId: {0}", id);
+
+                int integerId;
+
+                if (Int32.TryParse(id, out integerId))
+                {
+                    return UserCRUDDal.DeleteUser(integerId, GetConnectionStringValue(KeyConnection));
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error in GetUser", ex);
+                throw;
+            }
+        }
+
         #endregion
 
         

@@ -91,5 +91,38 @@ namespace UserCRUDTransaction.DAL
                 return context.user.ToList();
             }
         }
+
+        internal static bool DeleteUser(int id, string connectionString)
+        {
+            using (var context = new usercrudEntities(connectionString))
+            {
+                var user = context.user.FirstOrDefault(usr => usr.Id == id);
+
+                if (user == null)
+                    return false;
+
+                bool removeFailed;
+                do
+                {
+                    removeFailed = false;
+
+                    try
+                    {
+                        context.user.Remove(user);
+                        context.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+                        removeFailed = true;
+
+                        ex.Entries.Single().Reload();
+                    }
+
+                } while (removeFailed);
+
+
+                return true;
+            }
+        }
     }
 }
