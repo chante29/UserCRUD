@@ -575,7 +575,7 @@ namespace UserCRUDRestTest
 
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public void WhenDeleteUser_GivenExistsId_ShouldGetUsersReturnUsersLess()
         {
             const string name = "User Test";
@@ -600,7 +600,7 @@ namespace UserCRUDRestTest
             Assert.IsTrue(usersBefore.Count - 1 == usersAfter.Count);
 
         }
-        
+        /*
         [TestMethod]
         public void WhenDeleteUser_GivenNoExistsId_ShouldReturnCode204()
         {
