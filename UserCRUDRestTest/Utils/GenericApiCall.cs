@@ -161,6 +161,23 @@ namespace UserCRUDRestTest.Utils
             }
         }
 
+        /// <summary>
+        /// Launch a generic HttpRequestMessage
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public void LaunchForbiddenTest(ObjectGenericApiCall request)
+        {
+            var client = new HttpClient();
+
+            HttpRequestMessage requestMessage = GetRequestMessage(request);
+
+            using (HttpResponseMessage response = client.SendAsync(requestMessage).Result)
+            {
+                Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
+            }
+        }
+
         #endregion
 
         #region Private Methods

@@ -123,7 +123,9 @@ namespace UserCRUDTransaction.BLL
 
                 if (Int32.TryParse(id, out integerId))
                 {
-                    return UserCRUDDal.DeleteUser(integerId, GetConnectionStringValue(KeyConnection));
+                    if (!UserCRUDDal.DeleteUser(integerId, GetConnectionStringValue(KeyConnection)))
+                        throw new ArgumentException("User id doesn't exists");
+                    return true;
                 }
 
                 return false;
