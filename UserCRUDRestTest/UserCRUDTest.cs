@@ -533,8 +533,8 @@ namespace UserCRUDRestTest
             Assert.AreEqual(user3.Birthday, userTest3.Birthday);
         }
 
-       /* [TestMethod]
-        public void WhenGetUsers_GivenAnyData_ShouldReturnCorrectUsers()
+       [TestMethod]
+        public void WhenGetUsers_GivenAnyData_ShouldReturnCode204()
         {
             DeleteAllUsers();
 
@@ -594,6 +594,8 @@ namespace UserCRUDRestTest
             var userTest = GetUserTest(name, date);
             userTest.Id = CreateUser(userTest);
 
+            List<UserCRUDRest.User> usersBefore = GetUsers();
+
             var requestApiCall = new ObjectGenericApiCall
             {
                 MethodRequest = HttpMethod.Delete,
@@ -602,8 +604,6 @@ namespace UserCRUDRestTest
 
             requestApiCall.ParamsResource.Add(userTest.Id.ToString());
 
-            List<UserCRUDRest.User> usersBefore = GetUsers();
-
             _genericApiCaller.LaunchTest(requestApiCall);
 
             List<UserCRUDRest.User> usersAfter = GetUsers();
@@ -611,7 +611,7 @@ namespace UserCRUDRestTest
             Assert.IsTrue(usersBefore.Count - 1 == usersAfter.Count);
 
         }
-
+        
         [TestMethod]
         public void WhenDeleteUser_GivenNoExistsId_ShouldReturnCode204()
         {
@@ -702,6 +702,27 @@ namespace UserCRUDRestTest
             };
 
             return _genericApiCaller.LaunchTest<List<UserCRUDRest.User>>(requestApiCall);
+        }
+
+
+        private void DeleteAllUsers()
+        {
+            var users = GetUsers();
+
+            users.ForEach(user =>
+                        {
+
+                            var requestApiCall = new ObjectGenericApiCall
+                            {
+                                MethodRequest = HttpMethod.Delete,
+                                ParamsResource = new List<string>(),
+                            };
+
+                            requestApiCall.ParamsResource.Add(user.Id.ToString());
+
+                            _genericApiCaller.LaunchTest(requestApiCall);
+                        });
+
         }
 
         #endregion
