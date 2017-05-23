@@ -149,7 +149,7 @@ namespace UserCRUDRestTest.Utils
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public void LaunchForbiddenTest<T>(ObjectGenericApiCall request, T jsonObject)
+        public void LaunchBadRequestTest<T>(ObjectGenericApiCall request, T jsonObject)
         {
             var client = new HttpClient();
 
@@ -157,7 +157,7 @@ namespace UserCRUDRestTest.Utils
 
             using (HttpResponseMessage response = client.SendAsync(requestMessage).Result)
             {
-                Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
+                Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
             }
         }
 
@@ -166,7 +166,7 @@ namespace UserCRUDRestTest.Utils
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public void LaunchForbiddenTest(ObjectGenericApiCall request)
+        public void LaunchBadRequestTest(ObjectGenericApiCall request)
         {
             var client = new HttpClient();
 
@@ -174,7 +174,7 @@ namespace UserCRUDRestTest.Utils
 
             using (HttpResponseMessage response = client.SendAsync(requestMessage).Result)
             {
-                Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
+                Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
             }
         }
 

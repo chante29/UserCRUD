@@ -157,7 +157,7 @@ namespace UserCRUDRestTest
                 MethodRequest = HttpMethod.Post,
                 ParamsResource = new List<string>()
             };
-            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+            _genericApiCaller.LaunchBadRequestTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
         [TestMethod]
@@ -172,7 +172,7 @@ namespace UserCRUDRestTest
                 MethodRequest = HttpMethod.Post,
                 ParamsResource = new List<string>()
             };
-            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+            _genericApiCaller.LaunchBadRequestTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
         [TestMethod]
@@ -187,7 +187,7 @@ namespace UserCRUDRestTest
                 MethodRequest = HttpMethod.Post,
                 ParamsResource = new List<string>()
             };
-            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+            _genericApiCaller.LaunchBadRequestTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
         [TestMethod]
@@ -202,7 +202,7 @@ namespace UserCRUDRestTest
                 MethodRequest = HttpMethod.Post,
                 ParamsResource = new List<string>()
             };
-            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+            _genericApiCaller.LaunchBadRequestTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
         [TestMethod]
@@ -219,7 +219,7 @@ namespace UserCRUDRestTest
                 MethodRequest = HttpMethod.Post,
                 ParamsResource = new List<string>()
             };
-            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+            _genericApiCaller.LaunchBadRequestTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
         #endregion
@@ -336,7 +336,7 @@ namespace UserCRUDRestTest
                 MethodRequest = HttpMethod.Put,
                 ParamsResource = new List<string>()
             };
-            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+            _genericApiCaller.LaunchBadRequestTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
         [TestMethod]
@@ -355,7 +355,7 @@ namespace UserCRUDRestTest
                 MethodRequest = HttpMethod.Put,
                 ParamsResource = new List<string>()
             };
-            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+            _genericApiCaller.LaunchBadRequestTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
         [TestMethod]
@@ -374,7 +374,7 @@ namespace UserCRUDRestTest
                 MethodRequest = HttpMethod.Put,
                 ParamsResource = new List<string>()
             };
-            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+            _genericApiCaller.LaunchBadRequestTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
         [TestMethod]
@@ -393,7 +393,7 @@ namespace UserCRUDRestTest
                 MethodRequest = HttpMethod.Put,
                 ParamsResource = new List<string>()
             };
-            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+            _genericApiCaller.LaunchBadRequestTest<UserCRUDRest.User>(requestApiCall, userTest);
         }
 
         [TestMethod]
@@ -416,7 +416,7 @@ namespace UserCRUDRestTest
                 MethodRequest = HttpMethod.Put,
                 ParamsResource = new List<string>()
             };
-            _genericApiCaller.LaunchForbiddenTest<UserCRUDRest.User>(requestApiCall, userTest);
+            _genericApiCaller.LaunchBadRequestTest<UserCRUDRest.User>(requestApiCall, userTest);
 
         }
 
@@ -614,7 +614,7 @@ namespace UserCRUDRestTest
 
             requestApiCall.ParamsResource.Add(userIdDoesntExists);
 
-            _genericApiCaller.LaunchForbiddenTest(requestApiCall);
+            _genericApiCaller.LaunchBadRequestTest(requestApiCall);
         }
 
         #endregion

@@ -153,7 +153,7 @@ namespace UserCRUDRest
                 throw ex;
 
             if (ex is ArgumentException)
-                throw new WebFaultException<Error>(new Error { ErrorMessage = ex.Message, ErrorCode = (int)HttpStatusCode.Forbidden }, HttpStatusCode.Forbidden);
+                throw new WebFaultException<Error>(new Error { ErrorMessage = ex.Message, ErrorCode = (int)HttpStatusCode.BadRequest }, HttpStatusCode.BadRequest);
 
             throw new WebFaultException<Error>(new Error { ErrorMessage = ex.Message }, HttpStatusCode.InternalServerError);
         }
