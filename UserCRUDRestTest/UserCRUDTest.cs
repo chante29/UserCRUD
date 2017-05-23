@@ -452,6 +452,7 @@ namespace UserCRUDRestTest
 
         [TestMethod]
         public void WhenGetUserById_GivenIdDoentExists_ShouldReturnNull()
+        public void WhenGetUserById_GivenIdDoesntExists_ShouldReturnNull()
         {
             const string queryParamId = "id";
             const int id = 0;
@@ -466,6 +467,7 @@ namespace UserCRUDRestTest
             requestApiCall.QueryStringParams.Add(queryParamId, id);
 
             var user = _genericApiCaller.LaunchTest<UserCRUDRest.User>(requestApiCall);
+            var user = _genericApiCaller.LaunchNoContentTest<UserCRUDRest.User>(requestApiCall);
 
             Assert.IsNull(user);
         }
