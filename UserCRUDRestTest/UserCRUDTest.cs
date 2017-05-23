@@ -544,22 +544,11 @@ namespace UserCRUDRestTest
                 ParamsResource = new List<string>(),
             };
 
-            var users = _genericApiCaller.LaunchTest<List<UserCRUDRest.User>>(requestApiCall);
+            var users = _genericApiCaller.LaunchNoContentTest<List<UserCRUDRest.User>>(requestApiCall);
 
-            Assert.IsTrue(users.Count >= 3);
+            Assert.IsNull(users);
+        }
 
-            var user1 = users.FirstOrDefault(user => user.Id == userTest.Id);
-            Assert.AreEqual(user1.Name, userTest.Name);
-            Assert.AreEqual(user1.Birthday, userTest.Birthday);
-
-            var user2 = users.FirstOrDefault(user => user.Id == userTest2.Id);
-            Assert.AreEqual(user2.Name, userTest2.Name);
-            Assert.AreEqual(user2.Birthday, userTest2.Birthday);
-
-            var user3 = users.FirstOrDefault(user => user.Id == userTest3.Id);
-            Assert.AreEqual(user3.Name, userTest3.Name);
-            Assert.AreEqual(user3.Birthday, userTest3.Birthday);
-        }*/
 
 
         #endregion
