@@ -67,6 +67,27 @@ namespace UserCRUDRestTest.Utils
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        public TU LaunchOkCreateTest<T, TU>(ObjectGenericApiCall request, T jsonObject)
+        {
+            var client = new HttpClient();
+
+            HttpRequestMessage requestMessage = GetRequestMessage(request, jsonObject);
+
+            using (HttpResponseMessage response = client.SendAsync(requestMessage).Result)
+            {
+                Assert.IsNotNull(response.Content);
+                Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+                Assert.AreEqual("application/json", response.Content.Headers.ContentType.MediaType);
+
+                return response.Content.ReadAsAsync<TU>().Result;
+            }
+        }
+
+        /// <summary>
+        /// Launch a generic HttpRequestMessage
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public T LaunchTest<T>(ObjectGenericApiCall request)
         {
             var client = new HttpClient();

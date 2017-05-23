@@ -50,8 +50,12 @@ namespace UserCRUDRest
             {
                 SharedLibrary.User commonUser = user.ToCommonUser();
 
-                if(userTransaction.ValidateNewUser(commonUser))
+                if (userTransaction.ValidateNewUser(commonUser))
+                {
                     userId = userTransaction.AddNewUser(commonUser);
+                    if (WebOperationContext.Current != null)
+                       WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Created;
+                }
 
                 return  userId;
 
