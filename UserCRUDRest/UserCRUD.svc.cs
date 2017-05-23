@@ -85,7 +85,12 @@ namespace UserCRUDRest
         {
             try
             {
-               return userTransaction.GetUser(id).ToDataContract();
+                var user = userTransaction.GetUser(id);
+
+                if (user == null)
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.NoContent;
+
+               return user.ToDataContract();
 
             }
             catch (Exception e)
